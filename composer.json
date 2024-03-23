@@ -1,0 +1,27 @@
+{
+    "name": "arhitov/laravel-helpers",
+    "description": "Helper classes",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "helpers"
+    ],
+    "homepage": "https://github.com/arhitov/laravel-helpers",
+    "authors": [
+        {
+            "name": "clgsru",
+            "email": "clgsru@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/validation": "^v10|^v11"
+    },
+    "autoload": {
+        "psr-4": {
+            "Arhitov\\Helpers\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
