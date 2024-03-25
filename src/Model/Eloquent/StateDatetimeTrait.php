@@ -14,7 +14,7 @@ use Carbon\Carbon;
  */
 trait StateDatetimeTrait
 {
-    public static function bootStatusDatetimeTrait(): void
+    public static function bootStateDatetimeTrait(): void
     {
         self::creating(function (self $operation) {
             $operation->setStateDatetime();
