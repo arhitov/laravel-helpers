@@ -26,9 +26,11 @@ trait StateDatetimeTrait
 
     private function setStateDatetime(): void
     {
-        $datetimeKey = ($this->state?->value ?? '') . '_at';
-        if (($this->casts[$datetimeKey] ?? null) === 'datetime') {
-            $this->$datetimeKey = Carbon::now();
+        if (! $this->exists || $this->state !== $this->getOriginal('state')) {
+            $datetimeKey = ($this->state?->value ?? '') . '_at';
+            if (($this->casts[$datetimeKey] ?? null) === 'datetime') {
+                $this->$datetimeKey = Carbon::now();
+            }
         }
     }
 }
