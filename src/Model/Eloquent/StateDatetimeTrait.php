@@ -3,6 +3,7 @@
 namespace Arhitov\Helpers\Model\Eloquent;
 
 use Carbon\Carbon;
+use ErrorException;
 
 /**
  * Sets a datetime for a state change.
@@ -22,6 +23,22 @@ trait StateDatetimeTrait
         self::updating(function (self $operation) {
             $operation->setStateDatetime();
         });
+    }
+
+    public function setState($state): void
+    {
+        $stateClass = get_class($this->state);
+        if (is_string($state)) {
+            if ($state = $stateClass::tryFrom($state)) {
+                $this->state = $state;
+            } else {
+                throw new ErrorException('The name was not found in the state class enumeration.');
+            }
+        } elseif (get_class($state) === $stateClass) {
+            $this->state = $state;
+        } else {
+            throw new ErrorException('Undescribed behavior.');
+        }
     }
 
     private function setStateDatetime(): void
