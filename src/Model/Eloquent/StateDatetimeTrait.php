@@ -31,19 +31,21 @@ trait StateDatetimeTrait
         if (is_string($state)) {
             if ($state = $stateClass::tryFrom($state)) {
                 $this->state = $state;
+                $this->setStateDatetime(true);
             } else {
                 throw new ErrorException('The name was not found in the state class enumeration.');
             }
         } elseif (get_class($state) === $stateClass) {
             $this->state = $state;
+            $this->setStateDatetime(true);
         } else {
             throw new ErrorException('Undescribed behavior.');
         }
     }
 
-    private function setStateDatetime(): void
+    private function setStateDatetime(bool $forcibly = false): void
     {
-        if (! $this->exists || $this->state !== $this->getOriginal('state')) {
+        if ($forcibly || ! $this->exists || $this->state !== $this->getOriginal('state')) {
             $datetimeKey = 'state_' . ($this->state?->value ?? '') . '_at';
             if (($this->casts[$datetimeKey] ?? null) === 'datetime') {
                 $this->$datetimeKey = Carbon::now();
