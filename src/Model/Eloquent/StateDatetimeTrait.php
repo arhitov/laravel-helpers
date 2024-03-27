@@ -25,19 +25,21 @@ trait StateDatetimeTrait
         });
     }
 
-    public function setState($state): void
+    public function setState($state): self
     {
         $stateClass = get_class($this->state);
         if (is_string($state)) {
             if ($state = $stateClass::tryFrom($state)) {
                 $this->state = $state;
                 $this->setStateDatetime(true);
+                return $this;
             } else {
                 throw new ErrorException('The name was not found in the state class enumeration.');
             }
         } elseif (get_class($state) === $stateClass) {
             $this->state = $state;
             $this->setStateDatetime(true);
+            return $this;
         } else {
             throw new ErrorException('Undescribed behavior.');
         }
